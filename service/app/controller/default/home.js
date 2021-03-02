@@ -14,7 +14,7 @@ class HomeController extends Controller {
     let sql = 'SELECT article_content.id as id,'+
               'article_content.title as title,'+
               'article_content.introduce as introduce,'+
-              'article_content.release_time as release_time,'+
+              "FROM_UNIXTIME(article_content.release_time,'%Y-%m-%d %H:%i:%s' ) as release_time,"+
               'article_content.visit_count as visit_count ,'+
               '.article_type.typeName as typeName '+
               'FROM article_content LEFT JOIN article_type ON article_content.type_id = article_type.id'
