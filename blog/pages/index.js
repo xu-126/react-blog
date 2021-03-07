@@ -7,6 +7,8 @@ import { SmileOutlined } from "@ant-design/icons";
 import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
+import Link from 'next/link'
+import axios from 'axios'
 
 
 const Home = (list) =>  {
@@ -38,7 +40,12 @@ const Home = (list) =>  {
               dataSource={mylist}
               renderItem={item => (
                 <List.Item>
-                  <div className="list-title">{item.title}</div>
+                  <div className="list-title">
+                    <Link href={{pathname: '/detailed', query:{id: item.id}}}>
+                      <a>{item.title}</a>
+                    </Link>
+                    {/* {item.title} */}
+                  </div>
                   <div className="list-icon">
                     <span><SmileOutlined />{item.release_time} 2019-06-28</span>
                     <span><SmileOutlined />{item.typeName} 视频教程</span>
@@ -61,7 +68,6 @@ const Home = (list) =>  {
   </>
   )
 }
-const axios = require('axios')
 Home.getInitialProps = async () => {
   const promise = new Promise((resolve) => {
     axios.get('http://127.0.0.1:7001/default/getArticleList').then((res) => {

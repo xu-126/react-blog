@@ -24,6 +24,8 @@ config.default.js 配置数据库连接
 配置路由 访问页面 返回接口数据
 
 前台读取文章列表接口数据 报错axios is not defined/ connect ECONNREFUSED 127.0.0.1:7001 =》 因为获取本地数据但是端口没有启动所以无法连接获取到数据，进入service层 运行 npm run dev 即可启动7001端口
+
+首页点击文章到详情页 会出现 跨域 问题 就需要用到 yarn add egg-cors  再配置插件解决跨域问题
 ## 后台管理
 
 文章类别管理，系统设置

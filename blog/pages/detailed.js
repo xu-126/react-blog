@@ -1,7 +1,7 @@
-import React,{useState} from 'react'
+import React from 'react'
 import Head from 'next/head'
 import {Row, Col , Icon , Affix, Breadcrumb  } from 'antd'
-
+import axios from 'axios'
 import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
@@ -14,7 +14,8 @@ import 'markdown-navbar/dist/navbar.css';
 
 
 
-const Detailed = () => {
+const Detailed = (data) => {
+  console.log(data,'....data......')
   let markdown=
   '# p01:来个Hello World 初始Vue3.0\n' +
   '> aaaaaaaaa\n' +
@@ -112,4 +113,22 @@ const Detailed = () => {
    </>
   )
 }
-export default Detailed
+
+Detailed.getInitialProps = async(context)=>{
+
+  console.log(context.query.id)
+  let id =context.query.id
+  const promise = new Promise((resolve)=>{
+
+    axios('http://127.0.0.1:7001/default/getArticleById/'+id).then(
+      (res)=>{
+        // console.log('title...', title)
+        resolve(res.data.data[0])
+      }
+    )
+  })
+
+  return await promise
+}
+
+export default Detailed;
