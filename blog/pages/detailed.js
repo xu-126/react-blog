@@ -12,10 +12,13 @@ import ReactMarkdown from 'react-markdown'
 import MarkNav from 'markdown-navbar';
 import 'markdown-navbar/dist/navbar.css';
 
+import marked from 'marked'
+import hljs from "highlight.js";
+import 'highlight.js/styles/monokai-sublime.css';
 
+import Tocify from '../components/tocify.tsx'; // 菜单栏
 
 const Detailed = (data) => {
-  console.log(data,'....data......')
   let markdown=
   '# p01:来个Hello World 初始Vue3.0\n' +
   '> aaaaaaaaa\n' +
@@ -53,6 +56,35 @@ const Detailed = (data) => {
   '>> bbbbbbbbb\n' +
   '>>> cccccccccc\n\n'+
   '``` var a=11; ```'
+
+  const tocify = new Tocify();
+  const renderer = new marked.Renderer();
+
+  // ### jspang
+  renderer.heading = function(text, level, raw) {
+    const anchor = tocify.add(text, level);
+    return `<a id="${anchor}" href="#${anchor}" class="anchor-fix"><h${level}>${text}</h${level}></a>\n`;
+  };
+  
+
+  marked.setOptions({
+    renderer: renderer,  // 自定义菜单渲染
+    gfm: true,         // 是否保持github样式
+    pedantic: false,  // markdown 容错
+    sanitize: false,  // 元素输出 不忽略html
+    tables: true,    
+    breaks: false,    // 是否支持换行符 
+    smartLists: true,
+    smartypants: false,
+    highlight: function (code) {
+      return hljs.highlightAuto(code).value;   // 自动检测
+    }
+  }); 
+  
+
+  let html = marked(markdown)
+  console.log(data,'....data......')
+  
   return (
     <>
       <Head>
@@ -81,11 +113,13 @@ const Detailed = (data) => {
                   <span><Icon type="fire" /> 5498人</span>
                 </div>
 
-                <div className="detailed-content" >
-                  <ReactMarkdown 
+                <div className="detailed-content" 
+                  dangerouslySetInnerHTML={{__html: html}}
+                >
+                  {/* <ReactMarkdown 
                     source={markdown} 
                     escapeHtml={false}  
-                  />
+                  /> */}
                 </div>
 
              </div>
@@ -99,11 +133,14 @@ const Detailed = (data) => {
           <Affix offsetTop={5}>
             <div className="detailed-nav comm-box">
               <div className="nav-title">文章目录</div>
-              <MarkNav
+              {/* <MarkNav
                 className="article-menu"
                 source={markdown}
                 ordered={false}
-              />
+              /> */}
+              {
+                tocify && tocify.render()
+              }
             </div>
           </Affix>
         </Col>
