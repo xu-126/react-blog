@@ -3,11 +3,13 @@
 基于react-hooks egg.js 开发的个人博客系统
 
 ## blog 前台 用户使用，博客展现
+(yarn dev)
 
 react-markdown react专用的markdown解析组件 但这个插件的配置项太少了
 所以改用 marked + highlight.js 方案 较为成熟
 
 ## service 使用egg.js搭建接口中台
+(npm run dev)
 
 数据接口，业务逻辑
 egg.js 底层即为 koa
@@ -29,6 +31,14 @@ config.default.js 配置数据库连接
 
 重构detaied页面 之前用react-markdown,但是这个插件的配置项还是太少了，所以改用 marked+highlight.js
 重构detailed页面菜单栏 之前用 markdown-navbar 现在改用 tocify
-## 后台管理
+
+接口模块化和读取文章类别，以及根据类别获取对应文章列表
+
+-> 开始后台管理模块开发
+## 后台管理  admin
+(yarn start)
 
 文章类别管理，系统设置
+采用React Hooks + Ant Design，对博客文章的管理和登录系统进行开发
+环境搭建 create-react-app admin
+路由配置 yarn add react-router-dom  pages/main.js 文件下配置路由
