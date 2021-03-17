@@ -18,6 +18,8 @@ import 'highlight.js/styles/monokai-sublime.css';
 
 import Tocify from '../components/tocify.tsx'; // 菜单栏
 
+import  servicePath  from '../config/apiUrl'
+
 const Detailed = (data) => {
   let markdown=
   '# p01:来个Hello World 初始Vue3.0\n' +
@@ -63,7 +65,9 @@ const Detailed = (data) => {
   // ### jspang
   renderer.heading = function(text, level, raw) {
     const anchor = tocify.add(text, level);
-    return `<a id="${anchor}" href="#${anchor}" class="anchor-fix"><h${level}>${text}</h${level}></a>\n`;
+    return `<a id="${anchor}" href="#${anchor}" class="anchor-fix">
+              <h${level}>${text}</h${level}>
+            </a>\n`;
   };
   
 
@@ -157,7 +161,7 @@ Detailed.getInitialProps = async(context)=>{
   let id =context.query.id
   const promise = new Promise((resolve)=>{
 
-    axios('http://127.0.0.1:7001/default/getArticleById/'+id).then(
+    axios(servicePath.getArticleById + id).then(
       (res)=>{
         // console.log('title...', title)
         resolve(res.data.data[0])
