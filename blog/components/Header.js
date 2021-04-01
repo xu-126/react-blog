@@ -2,7 +2,7 @@ import React,{ useState, useEffect } from 'react'
 import '../styles/components/header.css'
 import { Row, Col, Menu } from 'antd'
 import { HomeOutlined, VideoCameraOutlined, SmileOutlined } from "@ant-design/icons";
-import Router from 'next/router'
+import {useRouter} from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
 import servicePath from '../config/apiUrl'
@@ -23,13 +23,15 @@ const Header = () => {
   //       }
   //       fetchData()
   //   },[])
-
+  const router = useRouter();
 //跳转到列表页
   const handleClick = (e)=>{
     if(e.key === '0'){
-        Router.push('/index')
+      console.log('index/..........');
+      router.push('/index')
     }else{
-        Router.push('/list?id='+e.key)
+      console.log('list/..........');
+      router.push('/list?id='+e.key)
     }
   }
 

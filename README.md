@@ -42,3 +42,23 @@ config.default.js 配置数据库连接
 采用React Hooks + Ant Design，对博客文章的管理和登录系统进行开发
 环境搭建 create-react-app admin
 路由配置 yarn add react-router-dom  pages/main.js 文件下配置路由
+pages/Login.js  登录页面
+后台管理界面搭建
+
+中后台结合
+service app controller admin main.js
+后台登录报错（跨域） ： Access to XMLHttpRequest at 'http://127.0.0.1:7001/admin/checkLogin' from origin 'http://localhost:3001' has been blocked by CORS policy:
+解决： 去service config config.defalt.js中 配置跨域设置 
+
+路由守卫 没登录没法调用接口
+利用egg.js中间件 app.middleware.xx 路由守卫 验证 service app  新建 middleware adminauth.js
+错误效果：账号密码输入后无法登录
+出现问题的原因: 无法获取ctx.session 
+解决：改成由http:localhost (http://127.0.0.1/)访问即可获取 因为egg项目启动地址为本机ip地址：192.168.*.***前端项目自带的启动地址为：localhost
+获取文章类型： 
+1. service app controll admin.js 编写 getTypeInfo 接口 从数据库获取数据
+2. 路由配置  service app router admin.js
+3. 回到后台 admin src config apiUrl.js 
+4. 页面获取数据 add src pages addArticle.js
+添加文章：
+!!! 有问题 修改文章：

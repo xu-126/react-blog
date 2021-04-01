@@ -1,17 +1,52 @@
 import React , {useState} from 'react';
 import 'antd/dist/antd.css';
-import { Card, Input, Button ,Spin } from 'antd';
+import { Card, Input, Button ,Spin, message } from 'antd';
 import { UserOutlined, KeyOutlined } from "@ant-design/icons";
 import '../static/css/Login.css';
+import axios from 'axios'
+import servicePath from '../config/apiUrl'
 
-function Login(){
+function Login(props){
   const [userName , setUserName] = useState('')
   const [password , setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false) 
 
   const checkLogin = ()=>{
     setIsLoading(true)
-    setTimeout(()=>{
+    if(!userName){
+      message.error('用户名不能为空')
+      setTimeout(() => {
+        setIsLoading(false)
+      },500)
+      return false
+    } else if(!password){
+      message.error('密码不能为空')
+      setTimeout(() => {
+        setIsLoading(false)
+      },500)
+      return false
+    }
+    let dataProps = {
+      'userName': userName,
+      'password': password
+    }
+    axios({
+      method: 'post',
+      url: servicePath.checkLogin,
+      data: dataProps,
+      withCredentials: true   // 前后端共享 session
+    }).then(res => {
+      setIsLoading(false)
+      if (res.data.data = '登录成功'){
+        localStorage.setItem('openId',res.data.openId)
+        console.log('props: ', props);
+        props.history.push('/index') // 页面跳转
+      } else{
+          message.error('用户名密码错误')
+      }
+    })
+
+    setTimeout(() => {
       setIsLoading(false)
     },1000)
   }
