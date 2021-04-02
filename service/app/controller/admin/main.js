@@ -49,16 +49,56 @@ class MainController extends Controller{
  }
 
  //修改文章
-async updateArticle(){
-  let tmpArticle= this.ctx.request.body
+  async updateArticle(){
+    let tmpArticle= this.ctx.request.body
 
-  const result = await this.app.mysql.update('article_content', tmpArticle);
-  const updateSuccess = result.affectedRows === 1;
-  console.log(updateSuccess)
-  this.ctx.body={
-      isScuccess:updateSuccess
+    const result = await this.app.mysql.update('article_content', tmpArticle);
+    const updateSuccess = result.affectedRows === 1;
+    console.log(updateSuccess)
+    this.ctx.body={
+        isScuccess:updateSuccess
+    }
+  }  
+
+  //获得文章列表
+  async getArticleList(){
+    let sql = 'SELECT article_content.id as id,'+
+                'article_content.title as title,'+
+                'article_content.introduce as introduce,'+
+                'article_content.visit_count as visit_count,'+
+                'article_content.release_time as release_time,'+
+                'article_type.typeName as typeName '+
+                'FROM article_content LEFT JOIN article_type ON article_content.type_id = article_type.Id '+
+                'ORDER BY article_content.id DESC '
+
+    const resList = await this.app.mysql.query(sql)
+    this.ctx.body={list:resList}
   }
-}  
+
+  //删除文章
+  async delArticle(){
+    let id = this.ctx.params.id
+    const res = await this.app.mysql.delete('article_content',{'id':id})
+    this.ctx.body={data:res}
+  }
+
+  //根据文章ID得到文章详情，用于修改文章
+  async getArticleById(){
+    let id = this.ctx.params.id
+
+    let sql = 'SELECT article_content.id as id,'+
+    'article_content.title as title,'+
+    'article_content.introduce as introduce,'+
+    'article_content.content as content,'+
+    'article_content.release_time as release_time,'+
+    'article_content.visit_count as visit_count,'+
+    'article_type.typeName as typeName ,'+
+    'article_type.id as typeId '+
+    'FROM article_content LEFT JOIN article_type ON article_content.type_id = article_type.Id '+
+    'WHERE article_content.id='+id
+    const result = await this.app.mysql.query(sql)
+    this.ctx.body={data:result}
+  }
 }
 
 module.exports = MainController

@@ -67,6 +67,7 @@ const AdminIndex = (props) => {
             <div>
               <Route path="/index/" exact component={AddArticle} />
               <Route path="/index/add" exact component={AddArticle} />
+              <Route path="/index/add/:id" exact component={AddArticle} />
               <Route path="/index/list" exact component={ArticleList} />
             </div>
           </div>

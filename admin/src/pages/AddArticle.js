@@ -21,8 +21,16 @@ const AddArticle = (props) => {
   const [typeInfo ,setTypeInfo] = useState([]) // 文章类别信息
   const [selectedType,setSelectType] = useState('请选择类型') //选择的文章类别
 
+
   useEffect(() => {
     getTypeInfo()
+    // 渲染需要修改文章的详细内容
+    //获得文章ID
+    let tmpId = props.match.params.id
+    if(tmpId){
+        setArticleId(tmpId)
+        getArticleById(tmpId)
+    } 
   }, [])
 
   marked.setOptions({
@@ -134,6 +142,26 @@ const AddArticle = (props) => {
     }
  }
 
+  // 显示需要修改的这篇文章的详细信息到页面
+
+  const getArticleById = (id)=>{
+    axios(servicePath.getArticleById+id,{ 
+        withCredentials: true,
+        header:{ 'Access-Control-Allow-Origin':'*' }
+    }).then(res => {
+            //let articleInfo= res.data.data[0]
+            setArticleTitle(res.data.data[0].title)
+            setArticleContent(res.data.data[0].content)
+            let html = marked(res.data.data[0].content)
+            setMarkdownContent(html)
+            setIntroducemd(res.data.data[0].introduce)
+            let tmpInt = marked(res.data.data[0].introduce)
+            setIntroducehtml(tmpInt)
+            setShowDate(res.data.data[0].release_time)
+            setSelectType(res.data.data[0].typeId)
+        }
+    )
+  }
   return (
     <div>
       <Row gutter={5}>
@@ -145,11 +173,13 @@ const AddArticle = (props) => {
                 onChange={e => {
                   setArticleTitle(e.target.value)
                 }}
-                size="large" />
+                size="large" 
+                value={articleTitle}
+              />
             </Col>
             <Col span={4}>
               &nbsp;
-              <Select defaultValue={selectedType} size="large" onChange={selectTypeHandler}>
+              <Select value={selectedType} defaultValue={selectedType} size="large" onChange={selectTypeHandler}>
                 {/* <Option value="Sign Up">视频教程</Option>
                 <Option value="js">js知识</Option> */}
                 {
@@ -209,9 +239,10 @@ const AddArticle = (props) => {
             <Col span={12}>
               <div className="date-select">
                 <DatePicker
-                  onChange={(date,dateString)=>setShowDate(dateString)} 
+                  onChange={(date,dateString)=> setShowDate(dateString)} 
                   placeholder="发布日期"
                   size="large"  
+                  // value={showDate}
                 />
                 </div>
             </Col>

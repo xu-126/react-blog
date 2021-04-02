@@ -61,4 +61,5 @@ service app controller admin main.js
 3. 回到后台 admin src config apiUrl.js 
 4. 页面获取数据 add src pages addArticle.js
 添加文章：
-!!! 有问题 修改文章：
+修改文章： 解决 设置 id 字段为主键并且自增 
+删除文章： 设置阻止默认事件！不然出现异常画面
