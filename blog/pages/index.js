@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
 import Header from '../components/Header'
-import { Row, Col, List } from 'antd';
+import { Row, Col, List, BackTop, Affix } from 'antd';
 import '../styles/pages/index.css'
 import { SmileOutlined } from "@ant-design/icons";
 import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
+import ViewRank from '../components/ViewRank'
 import Link from 'next/link'
 import axios from 'axios'
 import servicePath from '../config/apiUrl'
@@ -47,10 +48,13 @@ const Home = (list) =>  {
   // )
   return (
     <>
+      <BackTop />
       <Head>
         <title>Home</title>
       </Head>
-      <Header/>
+      <Affix offsetTop={0}>
+        <Header/>
+      </Affix>
       <Row className="comm-main" type="flex" justify="center">
         <Col className="comm-left" xs={24} sm={24} md={16} lg={18} xl={14}  >
           左侧
@@ -85,6 +89,7 @@ const Home = (list) =>  {
           右侧
           <Author />
           <Advert />
+          <ViewRank />
         </Col>
         <Footer />
       </Row>

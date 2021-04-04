@@ -63,3 +63,6 @@ service app controller admin main.js
 添加文章：
 修改文章： 解决 设置 id 字段为主键并且自增 
 删除文章： 设置阻止默认事件！不然出现异常画面
+
+
+前台详情页面评论功能 数据库comment 字段类型一定要传正确！

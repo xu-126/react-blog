@@ -1,8 +1,8 @@
 import '../styles/components/footer.css'
 const Footer = ()=>(
     <div className="footer-div">
-        <div>系统由 React+Node+Ant Desgin驱动 </div>
-        <div>JSPang.com</div>
+        <div>Copyright © 2021 徐佳影个人博客 </div>
+        {/* <div>JSPang.com</div> */}
     </div>
 )
 

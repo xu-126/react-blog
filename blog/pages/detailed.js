@@ -5,6 +5,7 @@ import axios from 'axios'
 import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
+import MyComment from '../components/MyComment'
 import Footer from '../components/Footer'
 import '../styles/pages/detailed.css'
 
@@ -20,7 +21,7 @@ import Tocify from '../components/tocify.tsx'; // 菜单栏
 
 import  servicePath  from '../config/apiUrl'
 
-const Detailed = (data) => {
+const Detailed = (props) => {
   let markdown=
   '# p01:来个Hello World 初始Vue3.0\n' +
   '> aaaaaaaaa\n' +
@@ -87,7 +88,6 @@ const Detailed = (data) => {
   
 
   let html = marked(markdown)
-  console.log(data,'....data......')
   
   return (
     <>
@@ -148,6 +148,12 @@ const Detailed = (data) => {
             </div>
           </Affix>
         </Col>
+      </Row>
+      <Row className="comm-main" type="flex" justify="center">
+        <Col className="comm-left" xs={24} sm={24} md={16} lg={18} xl={13}>
+          <MyComment articleId={props.id} />
+        </Col>
+        <Col className="comm-right" xs={0} sm={0} md={7} lg={6} xl={5}></Col>
       </Row>
       <Footer/>
 

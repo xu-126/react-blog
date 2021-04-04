@@ -14,17 +14,45 @@ class HomeController extends Controller {
     let sql = 'SELECT article_content.id as id,'+
               'article_content.title as title,'+
               'article_content.introduce as introduce,'+
-              "FROM_UNIXTIME(article_content.release_time,'%Y-%m-%d %H:%i:%s' ) as release_time,"+
+              // "FROM_UNIXTIME(article_content.release_time,'%Y-%m-%d %H:%i:%s' ) as release_time,"+
+              'article_content.release_time as release_time,'+
               'article_content.visit_count as visit_count ,'+
               '.article_type.typeName as typeName '+
-              'FROM article_content LEFT JOIN article_type ON article_content.type_id = article_type.id'
- 
+              'FROM article_content LEFT JOIN article_type ON article_content.type_id = article_type.id'              
+   
      const results = await this.app.mysql.query(sql)
  
      this.ctx.body={
          data:results
      }
  }
+
+   /**
+   * 根据浏览量降序获取前面8条文章信息
+   */
+    async getArticleByViewCount() {
+      const sql = 'SELECT * From article_content ORDER BY visit_count DESC LIMIT 10';
+  
+      const result = await this.app.mysql.query(sql);
+  
+      this.ctx.body = {
+        data: result
+      };
+    }
+
+  /**
+   * 添加留言信息
+   */
+     async addArticleComment() {
+      const tempComment = this.ctx.request.body
+  
+      const result = await this.app.mysql.insert('comment', tempComment)
+      const isSuccess = result.affectedRows === 1 // 返回true添加成功，否则，添加失败
+  
+        this.ctx.body = {
+          isSuccess
+        }
+    }
 
  // 根据接收的文章id查出内容
  async getArticleById() {
