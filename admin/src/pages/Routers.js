@@ -11,6 +11,8 @@ function Main(){
       <Route path="/index/add/" exact component={AdminIndex} />
       <Route path="/index/add/:id" exact component={AdminIndex} />
       <Route path="/index/list/" component={AdminIndex} />
+      <Route path="/index/comment/" exact component={AdminIndex} />
+      <Route path="/index/personal/" exact component={AdminIndex} />
     </Router> 
   )
 }

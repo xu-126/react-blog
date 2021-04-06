@@ -99,6 +99,42 @@ class MainController extends Controller{
     const result = await this.app.mysql.query(sql)
     this.ctx.body={data:result}
   }
+
+   /*********************************留言管理*************************************/
+
+    /**
+     * 获取留言信息
+     */
+     async getCommentsInfo() {
+      const sql = 'SELECT comment.id as id, '+
+                  'comment.nickname as nickname, '+
+                  'comment.phone as phone, '+
+                  'comment.content as content, '+
+                  'comment.release_time as release_time, '+
+                  'article_content.title as title '+
+                  'FROM comment LEFT JOIN article_content ON comment.articleId = article_content.id '+
+                  'ORDER BY comment.id DESC'
+
+      const result = await this.app.mysql.query(sql)
+
+      this.ctx.body = {
+        data: result
+      }
+    }
+
+    /**
+     * 删除文章留言信息
+     */
+    async deleteComment() {
+      const { id } = this.ctx.params
+
+      const result = await this.app.mysql.delete('comment', { id })
+
+      this.ctx.body = {
+        data: result
+      }
+    }
+
 }
 
 module.exports = MainController

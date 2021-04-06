@@ -7,14 +7,20 @@ import {
   FileOutlined,
   TeamOutlined,
   UserOutlined,
+  MessageOutlined,
+  ReadOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+  LogoutOutlined,
+  DownOutlined
 } from '@ant-design/icons';
 import { Route } from "react-router-dom";
 import AddArticle from './AddArticle'
 import ArticleList from './ArticleList'
+import CommentsList from './CommentsList'
 
 
 const { Header, Content, Footer, Sider } = Layout;
-const { SubMenu } = Menu;
 
 const AdminIndex = (props) => {
   const [collapsed, setCollapsed] = useState(false);
@@ -22,12 +28,25 @@ const AdminIndex = (props) => {
     setCollapsed(!collapsed)
   }
 
-  const handleClickArticle = e=>{
-    console.log('e', e)
-    if(e.key === 'addArticle'){
-      props.history.push('/index/add')
-    }else{
-      props.history.push('/index/list')
+  const [subMenu, setSubMenu] = useState('工作台'); 
+  // 菜单选择路由跳转函数
+  const selectHandleMenu = (e) => {
+    switch(e.key) {    
+      case 'articleList':
+        props.history.push('/index/list/');
+        setSubMenu('文章管理');
+        break;
+      case 'comment':
+        props.history.push('/index/comment/');
+        setSubMenu('留言管理');
+        break;
+      case 'personal':
+        props.history.push('/index/personal/');
+        setSubMenu('个人管理');
+        break;
+      default:
+        props.history.push('/index/');
+        setSubMenu('工作台');
     }
   }
 
@@ -36,23 +55,22 @@ const AdminIndex = (props) => {
     <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo" />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-          <Menu.Item key="1" icon={<PieChartOutlined />}>
-            Option 1
+        <Menu theme="dark" defaultSelectedKeys={['workSpace']} mode="inline" onClick={selectHandleMenu}>
+          <Menu.Item key="workSpace">
+            <DesktopOutlined />
+            <span>工作台</span>
           </Menu.Item>
-          <Menu.Item key="2" icon={<DesktopOutlined />}>
-            Option 2
+          <Menu.Item key="comment">
+            <MessageOutlined />
+            <span>留言管理</span>
           </Menu.Item>
-          <SubMenu key="sub1" icon={<UserOutlined />} title="文章管理" onClick={handleClickArticle}>
-            <Menu.Item key="addArticle">添加文章</Menu.Item>
-            <Menu.Item key="articleList">文章列表</Menu.Item>
-          </SubMenu>
-          <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
-            <Menu.Item key="6">Team 1</Menu.Item>
-            <Menu.Item key="8">Team 2</Menu.Item>
-          </SubMenu>
-          <Menu.Item key="9" icon={<FileOutlined />}>
-            Files
+          <Menu.Item key="articleList">
+            <ReadOutlined />
+            <span>文章管理</span>
+          </Menu.Item>
+          <Menu.Item key="personal">
+            <UserOutlined />
+            <span>个人管理</span>
           </Menu.Item>
         </Menu>
       </Sider>
@@ -61,7 +79,7 @@ const AdminIndex = (props) => {
         <Content style={{ margin: '0 16px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item>
+            <Breadcrumb.Item>{subMenu}</Breadcrumb.Item>
           </Breadcrumb>
           <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
             <div>
@@ -69,6 +87,8 @@ const AdminIndex = (props) => {
               <Route path="/index/add" exact component={AddArticle} />
               <Route path="/index/add/:id" exact component={AddArticle} />
               <Route path="/index/list" exact component={ArticleList} />
+              <Route path="/index/comment/" exact component={CommentsList} />
+              <Route path="/index/personal/" exact component={ArticleList} />
             </div>
           </div>
         </Content>
