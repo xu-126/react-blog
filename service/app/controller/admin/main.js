@@ -135,6 +135,21 @@ class MainController extends Controller{
       }
     }
 
+    /**
+     * 用户登出
+     */
+     async logout() {
+      this.ctx.session = null
+      let isSuccess = false
+      // session中openId不存在，登出成功
+      if(!this.ctx.session) {
+        isSuccess = true
+      }
+      
+      this.ctx.body = {
+        isSuccess
+      }
+    }
 }
 
 module.exports = MainController

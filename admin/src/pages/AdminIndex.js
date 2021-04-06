@@ -1,6 +1,6 @@
 import React,{ useState } from 'react';
 import '../static/css/AdminIndex.css';
-import { Layout, Menu, Breadcrumb } from 'antd';
+import { Layout, Menu, Breadcrumb, Dropdown, message, Avatar} from 'antd';
 import {
   DesktopOutlined,
   PieChartOutlined,
@@ -18,17 +18,24 @@ import { Route } from "react-router-dom";
 import AddArticle from './AddArticle'
 import ArticleList from './ArticleList'
 import CommentsList from './CommentsList'
-
+import { logout } from './service/index'
 
 const { Header, Content, Footer, Sider } = Layout;
 
 const AdminIndex = (props) => {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(false); // menu菜单闭合
+  const [subMenu, setSubMenu] = useState('工作台'); // 子menu名称
+
+  // 底部控制导航菜单的闭合
   const onCollapse = () => {
     setCollapsed(!collapsed)
   }
 
-  const [subMenu, setSubMenu] = useState('工作台'); 
+  // 头部控制导航菜单的闭合
+  const toggle = () => {
+    setCollapsed(!collapsed);
+  };
+
   // 菜单选择路由跳转函数
   const selectHandleMenu = (e) => {
     switch(e.key) {    
@@ -50,12 +57,33 @@ const AdminIndex = (props) => {
     }
   }
 
+  // 退出登录
+  const myLogout = () => {
+    logout().then(res => {
+      const { isSuccess } = res.data;
+      if(isSuccess) {
+        message.success('登出成功');
+        props.history.push('/');
+      } else {
+        message.error('登出失败');
+      }
+    });
+  }
+
+  const menu = (
+    <Menu>
+      <Menu.Item onClick={myLogout}>
+        <LogoutOutlined /> 退出
+      </Menu.Item>
+    </Menu>
+  );
+
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
         <div className="logo" />
-        <Menu theme="dark" defaultSelectedKeys={['workSpace']} mode="inline" onClick={selectHandleMenu}>
+        <Menu defaultSelectedKeys={['workSpace']} mode="inline" onClick={selectHandleMenu}>
           <Menu.Item key="workSpace">
             <DesktopOutlined />
             <span>工作台</span>
@@ -75,7 +103,25 @@ const AdminIndex = (props) => {
         </Menu>
       </Sider>
       <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }} />
+        <Header className="site-layout-background" style={{ padding: 0 }}>
+          <div className="header-left">
+          {
+            collapsed ? (
+              <MenuUnfoldOutlined style={{ fontSize: '26px'}} onClick={toggle} />
+            ) : (
+              <MenuFoldOutlined style={{ fontSize: '26px' }} onClick={toggle} />
+            )
+          }
+          </div>
+          <div className="header-right">
+            <Dropdown overlay={menu} placement="bottomLeft">
+              <span className="header-nickname">
+                胖胖<DownOutlined />
+              </span>
+            </Dropdown>
+            <Avatar src="http://blogimages.jspang.com/blogtouxiang1.jpg" size={45} />
+          </div>
+        </Header>
         <Content style={{ margin: '0 16px' }}>
           <Breadcrumb style={{ margin: '16px 0' }}>
             <Breadcrumb.Item>User</Breadcrumb.Item>
@@ -92,7 +138,7 @@ const AdminIndex = (props) => {
             </div>
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
+        <Footer style={{ textAlign: 'center' }}>System ©2021 Created by Jiaying Xu</Footer>
       </Layout>
     </Layout>
   )

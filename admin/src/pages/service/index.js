@@ -14,3 +14,10 @@ export const deleteComment = (id) => axios({
   method: 'get',
   withCredentials: true
 })
+
+// 用户登出
+export const logout = () => axios({
+  url: servicePath.logout,
+  method: 'post',
+  withCredentials: true
+});
