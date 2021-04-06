@@ -11,6 +11,9 @@ class HomeController extends Controller {
   }
   // 获取文章列表具体内容数据
   async getArticleList(){
+    const { pageNo, pageSize } = this.ctx.request.body
+    const startRows = (pageNo-1)*pageSize
+    const endRows = pageSize
     let sql = 'SELECT article_content.id as id,'+
               'article_content.title as title,'+
               'article_content.introduce as introduce,'+
@@ -18,13 +21,18 @@ class HomeController extends Controller {
               'article_content.release_time as release_time,'+
               'article_content.visit_count as visit_count ,'+
               '.article_type.typeName as typeName '+
-              'FROM article_content LEFT JOIN article_type ON article_content.type_id = article_type.id'              
+              'FROM article_content LEFT JOIN article_type ON article_content.type_id = article_type.id'+
+              ' ORDER BY article_content.id DESC '+
+              'LIMIT '+startRows+', '+endRows              
    
-     const results = await this.app.mysql.query(sql)
- 
-     this.ctx.body={
-         data:results
-     }
+              const sql2 = 'SELECT count(*) as total FROM article_content'
+              const totalNum = await this.app.mysql.query(sql2)
+              const result = await this.app.mysql.query(sql)
+              this.ctx.body={
+                  pageSize: endRows,
+                  total: totalNum[0].total,
+                  data: result
+              }
  }
 
    /**

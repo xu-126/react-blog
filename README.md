@@ -66,3 +66,5 @@ service app controller admin main.js
 
 
 前台详情页面评论功能 数据库comment 字段类型一定要传正确！
+
+前台文章列表分页  路由中原为get 一定要改成 post 不然一直返回 500  排查了很久才发现 axios中为post 传了字段但 router中没改成 post 所以造成500报错
