@@ -7,7 +7,7 @@ import {
   WechatOutlined
 } from '@ant-design/icons'
 
-// import MyAvatar from './components/MyAvatar';
+import MyAvatar from './components/MyAvatar';
 import MyModal from './components/Modal';
 
 import {
@@ -30,9 +30,6 @@ const Personal = () => {
   useEffect(() => {
     getUserMessage()
   }, []);
-  useEffect(() => {
-    console.log('userInfo:', userInfo);
-  }, [userInfo]);
 
   /**
    * 获取用户个人信息
@@ -95,10 +92,9 @@ const Personal = () => {
     <>
       <Row className="row-warpper" type="flex" justify="center" align="middle">
         <Col span={4}>
-          {/* { userInfo.avatar && (
+          { userInfo.avatar && (
             <MyAvatar imgUrl={userInfo.avatar} updateUserMessage={updateUserMessage} userInfo={userInfo}/>
-            <MyAvatar imgUrl={userInfo.avatar}/>
-          )} */}
+          )}
         </Col>
         <Divider className="divider-css" type="vertical" />
         <Col className="content-div" span={19}>

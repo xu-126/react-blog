@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useState, useEffect } from 'react';
 import '../static/css/AdminIndex.css';
 import { Layout, Menu, Breadcrumb, Dropdown, message, Avatar} from 'antd';
 import {
@@ -20,6 +20,12 @@ import ArticleList from './ArticleList'
 import CommentsList from './CommentsList'
 import Personal from './Personal/index'
 import { logout } from './service/index'
+import MyAvatar from './Personal/components/MyAvatar';
+import {
+  getUserInfo,
+  updateUserInfo
+} from './Personal/service/index';
+
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -78,7 +84,36 @@ const AdminIndex = (props) => {
       </Menu.Item>
     </Menu>
   );
+  const [userInfo, setUserInfo] = useState({}); // 用户个人信息
 
+  useEffect(() => {
+    getUserMessage()
+  }, []);
+   /**
+   * 获取用户个人信息
+   */
+    const getUserMessage = () => {
+      getUserInfo().then(res => {
+        const { data } = res.data;
+        setUserInfo(data[0]);
+      })
+    }
+  
+    /**
+     * 更新用户相关个人信息
+     */
+    const updateUserMessage = (params) => {
+      const data = { ...params, id: params.id }; //这个需要显示的传递id，数据库中为Id不符合传递要求
+      updateUserInfo(data).then(res => {
+        const { isSuccess } = res.data;
+        if(isSuccess) {
+          setUserInfo({...data});
+          message.success('信息更新成功');
+        } else {
+          message.error('信息没有发生变化');
+        }
+      })
+    }
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -120,7 +155,13 @@ const AdminIndex = (props) => {
                 小嗨<DownOutlined />
               </span>
             </Dropdown>
-            <Avatar src="https://avatars.githubusercontent.com/u/51733211?s=400&u=591b6a327fa0ac83a2857fdd534ce16cb490b267&v=4" size={45} />
+            <div className="header-avatar">
+              { userInfo.avatar && (
+                <MyAvatar imgUrl={userInfo.avatar} updateUserMessage={updateUserMessage} userInfo={userInfo}/>)
+              }
+            </div>
+            
+            {/* <Avatar src="https://avatars.githubusercontent.com/u/51733211?s=400&u=591b6a327fa0ac83a2857fdd534ce16cb490b267&v=4" size={45} /> */}
           </div>
         </Header>
         <Content style={{ margin: '0 16px' }}>
@@ -130,12 +171,12 @@ const AdminIndex = (props) => {
           </Breadcrumb>
           <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
             <div>
-              <Route path="/index/" exact component={AddArticle} />
               <Route path="/index/add" exact component={AddArticle} />
               <Route path="/index/add/:id" exact component={AddArticle} />
               <Route path="/index/list" exact component={ArticleList} />
               <Route path="/index/comment/" exact component={CommentsList} />
               <Route path="/index/personal/" exact component={Personal} />
+              <Route path="/index/" exact component={AddArticle} />
             </div>
           </div>
         </Content>

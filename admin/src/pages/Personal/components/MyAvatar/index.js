@@ -30,7 +30,7 @@ const Avatar = (props) => {
     if (info.file.status === 'done') {
       setLoading(false);
       // 更新数据库中个人头像信息
-      updateUserMessage({ ...userInfo, avatar: info.file.response.imgUrl, Id: 1 });
+      updateUserMessage({ ...userInfo, avatar: info.file.response.imgUrl, id: 1 });
       setImageUrl(info.file.response.imgUrl);
     }
   };
@@ -45,7 +45,7 @@ const Avatar = (props) => {
 
   return (
     <>
-      {/* <Upload
+      <Upload
         name="avatar"
         listType="picture-card"
         className="avatar-uploader"
@@ -56,7 +56,7 @@ const Avatar = (props) => {
         onChange={handleChange}
       >
         {imageUrl ? <img src={imageUrl} alt="avatar" style={{ width: '100%' }} /> : uploadButton}
-      </Upload> */}
+      </Upload>
     </>
     
 
