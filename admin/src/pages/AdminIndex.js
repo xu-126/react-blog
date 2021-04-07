@@ -18,6 +18,7 @@ import { Route } from "react-router-dom";
 import AddArticle from './AddArticle'
 import ArticleList from './ArticleList'
 import CommentsList from './CommentsList'
+import Personal from './Personal/index'
 import { logout } from './service/index'
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -116,10 +117,10 @@ const AdminIndex = (props) => {
           <div className="header-right">
             <Dropdown overlay={menu} placement="bottomLeft">
               <span className="header-nickname">
-                胖胖<DownOutlined />
+                小嗨<DownOutlined />
               </span>
             </Dropdown>
-            <Avatar src="http://blogimages.jspang.com/blogtouxiang1.jpg" size={45} />
+            <Avatar src="https://avatars.githubusercontent.com/u/51733211?s=400&u=591b6a327fa0ac83a2857fdd534ce16cb490b267&v=4" size={45} />
           </div>
         </Header>
         <Content style={{ margin: '0 16px' }}>
@@ -134,7 +135,7 @@ const AdminIndex = (props) => {
               <Route path="/index/add/:id" exact component={AddArticle} />
               <Route path="/index/list" exact component={ArticleList} />
               <Route path="/index/comment/" exact component={CommentsList} />
-              <Route path="/index/personal/" exact component={ArticleList} />
+              <Route path="/index/personal/" exact component={Personal} />
             </div>
           </div>
         </Content>

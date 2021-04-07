@@ -13,7 +13,7 @@ class MainController extends Controller{
   async checkLogin(){
     let userName = this.ctx.request.body.userName
     let password = this.ctx.request.body.password
-    const sql = " SELECT userName FROM admin_user WHERE userName = '"+userName +
+    const sql = " SELECT userName FROM userInfo WHERE userName = '"+userName +
                 "' AND password = '"+password+"'"
 
     const res = await this.app.mysql.query(sql)
@@ -150,6 +150,65 @@ class MainController extends Controller{
         isSuccess
       }
     }
+
+    /*********************************个人信息管理*************************************/
+
+    /**
+     * 查询个人信息
+     */
+     async getUserInfo() {
+      const result = await this.app.mysql.select('userinfo');
+
+      this.ctx.body = {
+        data: result
+      }
+    }
+
+    /**
+     * 更新个人信息
+     */
+    async updateUserInfo() {
+      const tempUserInfo = this.ctx.request.body
+
+      const result = await this.app.mysql.update('userinfo', tempUserInfo)
+      const isSuccess = result.affectedRows === 1
+
+      this.ctx.body = {
+        isSuccess
+      }
+    }
+
+    /**
+     * 上传头像图片
+     */
+    // async upload() {
+    //   const ctx = this.ctx;
+    //   //egg-multipart 已经帮我们处理文件二进制对象
+    //   // node.js 和 php 的上传唯一的不同就是 ，php 是转移一个 临时文件
+    //   // node.js 和 其他语言（java c#） 一样操作文件流
+    //   const stream = await ctx.getFileStream();
+    //   //新建一个文件名
+    //   const filename = md5(stream.filename) + path
+    //       .extname(stream.filename)
+    //       .toLocaleLowerCase();
+    //   //文件生成绝对路径
+    //   //当然这里这样是不行的，因为你还要判断一下是否存在文件路径
+    //   const target = path.join(this.config.baseDir, 'app/public/uploads', filename);
+    //   //生成一个文件写入 文件流
+    //   const writeStream = fs.createWriteStream(target);
+    //   try {
+    //       //异步把文件流 写入
+    //       await awaitWriteStream(stream.pipe(writeStream));
+    //   } catch (err) {
+    //       //如果出现错误，关闭管道
+    //       await sendToWormhole(stream);
+    //       throw err;
+    //   }
+    //   //文件响应
+    //   ctx.body = {
+    //       imgUrl: 'http://127.0.0.1:7001/public/uploads/' + filename
+    //   };
+    // }
 }
 
 module.exports = MainController

@@ -16,8 +16,6 @@ let servicePath = {
 
   getUserInfo: ipUrl + 'getUserInfo', // 获取个人信息接口
   updateUserInfo: ipUrl + 'updateUserInfo', // 更新个人信息接口
-  getArticleByTypeId: ipUrl + 'getArticleByTypeId/', // 根据文章类型id获取文章信息
-
 
 }
 

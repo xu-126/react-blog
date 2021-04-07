@@ -16,8 +16,8 @@ module.exports = app =>{
   router.post('/admin/logout', adminauth, controller.admin.main.logout) // 登出
 
   // /*********个人信息管理***********/
-  // router.get('/admin/getUserInfo', adminauth, controller.admin.main.getUserInfo) // 获取个人信息
-  // router.post('/admin/updateUserInfo', adminauth, controller.admin.main.updateUserInfo) // 更新个人信息
+  router.get('/admin/getUserInfo', adminauth, controller.admin.main.getUserInfo) // 获取个人信息
+  router.post('/admin/updateUserInfo', adminauth, controller.admin.main.updateUserInfo) // 更新个人信息
   // router.post('/admin/upload', controller.admin.main.upload) // 头像上传 
   
 }
