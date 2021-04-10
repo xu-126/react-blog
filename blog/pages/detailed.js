@@ -2,6 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import {Row, Col , Icon , Affix, Breadcrumb  } from 'antd'
 import axios from 'axios'
+import moment from 'moment'
 import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
@@ -9,9 +10,9 @@ import MyComment from '../components/MyComment'
 import Footer from '../components/Footer'
 import '../styles/pages/detailed.css'
 
-import ReactMarkdown from 'react-markdown'
-import MarkNav from 'markdown-navbar';
-import 'markdown-navbar/dist/navbar.css';
+// import ReactMarkdown from 'react-markdown'
+// import MarkNav from 'markdown-navbar';
+// import 'markdown-navbar/dist/navbar.css';
 
 import marked from 'marked'
 import hljs from "highlight.js";
@@ -86,8 +87,11 @@ const Detailed = (props) => {
     }
   }); 
   
-
-  let html = marked(markdown)
+  // React.useEffect(() => {
+  //   console.log('props: ',props)
+  // }, [])
+  
+  let html = marked(props.content)
   
   return (
     <>
@@ -101,29 +105,25 @@ const Detailed = (props) => {
               <div className="bread-div">
                 <Breadcrumb>
                   <Breadcrumb.Item><a href="/">首页</a></Breadcrumb.Item>
-                  <Breadcrumb.Item>视频列表</Breadcrumb.Item>
-                  <Breadcrumb.Item>xxxx</Breadcrumb.Item>
+                  <Breadcrumb.Item><a href={`/list?id=${props.typeId}`}>{props.typeName}</a></Breadcrumb.Item>
+                  <Breadcrumb.Item>{props.title}</Breadcrumb.Item>
                 </Breadcrumb>
               </div>
 
              <div>
                 <div className="detailed-title">
-                React实战视频教程-技术胖Blog开发(更新08集)
+                  {props.title}
                 </div>
 
                 <div className="list-icon center">
-                  <span><Icon type="calendar" /> 2019-06-28</span>
-                  <span><Icon type="folder" /> 视频教程</span>
-                  <span><Icon type="fire" /> 5498人</span>
+                  <span><Icon type="calendar" />{moment(props.release_time).format('YYYY-MM-DD')}</span>
+                  <span><Icon type="folder" />{props.typeName}</span>
+                  <span><Icon type="fire" />{props.visit_count}人</span>
                 </div>
 
                 <div className="detailed-content" 
                   dangerouslySetInnerHTML={{__html: html}}
                 >
-                  {/* <ReactMarkdown 
-                    source={markdown} 
-                    escapeHtml={false}  
-                  /> */}
                 </div>
 
              </div>
@@ -137,11 +137,6 @@ const Detailed = (props) => {
           <Affix offsetTop={5}>
             <div className="detailed-nav comm-box">
               <div className="nav-title">文章目录</div>
-              {/* <MarkNav
-                className="article-menu"
-                source={markdown}
-                ordered={false}
-              /> */}
               {
                 tocify && tocify.render()
               }

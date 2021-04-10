@@ -175,11 +175,12 @@ const AddArticle = (props) => {
                 }}
                 size="large" 
                 value={articleTitle}
+                allowClear
               />
             </Col>
             <Col span={4}>
               &nbsp;
-              <Select value={selectedType} defaultValue={selectedType} size="large" onChange={selectTypeHandler}>
+              <Select value={selectedType} defaultValue={selectedType} allowClear style={{ width: '7rem' }} size="middle" onChange={selectTypeHandler}>
                 {/* <Option value="Sign Up">视频教程</Option>
                 <Option value="js">js知识</Option> */}
                 {

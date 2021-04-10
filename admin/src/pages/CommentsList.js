@@ -70,11 +70,11 @@ const MyCollapse = () => {
         return (
           <Panel header={header(item)} key={item.id}>
             <div className="comment-person">
-              <span className="nick-name">留言人昵称：{item.nickName}</span>
-              <span>留言人联系方式：{item.contact}</span>
+              <span className="nick-name">留言人昵称：{item.nickname}</span>
+              <span>留言人联系方式：{item.phone}</span>
             </div>
             <div>
-              留言内容：{item.commentContent}
+              留言内容：{item.content}
             </div>
           </Panel>
         )

@@ -17,7 +17,7 @@ class HomeController extends Controller {
     let sql = 'SELECT article_content.id as id,'+
               'article_content.title as title,'+
               'article_content.introduce as introduce,'+
-              // "FROM_UNIXTIME(article_content.release_time,'%Y-%m-%d %H:%i:%s' ) as release_time,"+
+              "FROM_UNIXTIME(article_content.release_time,'%Y-%m-%d %H:%i:%s' ) as release_time,"+
               'article_content.release_time as release_time,'+
               'article_content.visit_count as visit_count ,'+
               '.article_type.typeName as typeName '+
@@ -70,7 +70,9 @@ class HomeController extends Controller {
    let sql = 'SELECT article_content.id as id,' +
    'article_content.title as title,'+
    'article_content.introduce as introduce,'+
-   "FROM_UNIXTIME(article_content.release_time,'%Y-%m-%d %H:%i:%s' ) as release_time,"+
+   'article_content.content as content,'+
+  //  "FROM_UNIXTIME(article_content.release_time,'%Y-%m-%d %H:%i:%s' ) as release_time,"+
+   'article_content.release_time as release_time,'+
    'article_content.visit_count as visit_count ,'+
    '.article_type.typeName as typeName,'+
    '.article_type.id as typeId ' +
