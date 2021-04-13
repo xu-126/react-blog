@@ -69,6 +69,8 @@ service app controller admin main.js
 
 前台文章列表分页  路由中原为get 一定要改成 post 不然一直返回 500  排查了很久才发现 axios中为post 传了字段但 router中没改成 post 所以造成500报错
 
+多域名问题 路由守卫问题
+
 
 运行
 1、在blog、server、admin文件目录下安装项目依赖：
