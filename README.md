@@ -72,6 +72,8 @@ service app controller admin main.js
 关闭端口：
 1. lsof -i tcp:7001 找出node PID号
 2. kill -9 PID
+  
+多域名问题 路由守卫问题
 
 
 运行
