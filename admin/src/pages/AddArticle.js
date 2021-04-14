@@ -60,7 +60,7 @@ const AddArticle = (props) => {
     axios({
       method: 'get',
       url: servicePath.getTypeInfo,
-      header:{ 'Access-Control-Allow-Origin':'*' },
+      // header:{ 'Access-Control-Allow-Origin':'*' },
       withCredentials: true
     }).then(res => {
       if (res.data.data=="没有登录") {

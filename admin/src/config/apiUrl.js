@@ -8,6 +8,8 @@ let servicePath = {
   getArticleList: ipUrl + 'getArticleList' ,  //  文章列表 
   delArticle: ipUrl + 'delArticle/' ,  //  删除文章
   getArticleById: ipUrl + 'getArticleById/' ,  //  根据ID获得文章详情
+  getArticleByTypeId: ipUrl + 'getArticleByTypeId/', // 根据文章类型id获取文章信息
+
 
   getCommentsInfo: ipUrl + 'getCommentsInfo', // 获取留言信息接口
   deleteComment: ipUrl + 'deleteComment/', // 获取留言信息接口

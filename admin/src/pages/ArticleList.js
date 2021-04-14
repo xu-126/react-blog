@@ -1,30 +1,59 @@
 import React,{useState,useEffect} from 'react';
 import '../static/css/ArticleList.css'
-import { List ,Row ,Col , Modal ,message ,Button,Switch} from 'antd';
+import { List ,Row ,Col , Modal ,message ,Button,Switch, Select} from 'antd';
 import axios from 'axios'
+import {
+  getArticleList,
+  deleteArticle,
+  getTypeInfo,
+  getArticleByTypeId
+} from './service';
 import  servicePath  from '../config/apiUrl'
+
 const { confirm } = Modal;
+const { Option } = Select;
 
 function ArticleList(props){
   const [list,setList]=useState([])
+  const [articleTypeList, setArticleTypeList] = useState([]); // 文章类型
+  const [selectType, setSelectType] = useState(''); // 文章类型
+
   //得到文章列表
   const getList = ()=>{
-    axios({
-            method:'get',
-            url: servicePath.getArticleList,
-            withCredentials: true,
-            header:{ 'Access-Control-Allow-Origin':'*' }
-        }).then(res => {
-            setList(res.data.list)  
-          }
-        )
+    getArticleList().then(res => {
+      setList(res.data.list);
+    });
   }
+  
+  // 获取文章类型信息列表
+  const getTypeMessage = () =>{
+    getTypeInfo().then(res => {
+      const {data} = res.data;
+      setArticleTypeList(data);
+    })
+  }
+
+  // 选择展示相应类型的文章
+  const handleSelect = (value) => {
+    console.log('value',value,'data');
+    if(value) {
+      getArticleByTypeId(value).then(res => {
+        const { data } = res.data;
+        setSelectType(value);
+        setList(data);
+        console.log('value',value,'data', data);
+
+      })
+    } else {
+      setSelectType('请选择文章类型');
+      getList();
+    }    
+  }
+
   useEffect(() => {
     getList()
+    getTypeMessage()
   }, [])
-  useEffect(() => {
-    console.log('list: ',list)
-  }, [list])
 
   //删除文章的方法
   const delArticle = (e,id)=>{
@@ -40,6 +69,11 @@ function ArticleList(props){
                 getList()
             }
             )
+        // deleteArticle(id).then(res => {
+        //   message.success('文章删除成功');
+        //   // 如果前台并发量比较大的时候，尽量使用使用修改数组值的方式而不是再去数据库中进行查找
+        //   getList();
+        // })
       },
       onCancel() {
           message.success('没有任何改变')
@@ -56,6 +90,16 @@ function ArticleList(props){
 
   return (
       <div>
+          <div className="artical-heard">
+            <Select allowClear placeholder='请选择文章类型' style={{ width: '150px' }} size="middle" onChange={handleSelect}>
+              {articleTypeList.map(item => (
+                <Option key={item.id} value={item.id}>
+                  {item.typeName}
+                </Option>
+              ))}
+            </Select>
+            <Button type="primary" size="middle" style={{ float: 'right' }} onClick={() => props.history.push('/index/add/')}>添加文章</Button>
+          </div>
            <List
               header={
                   <Row className="list-div">

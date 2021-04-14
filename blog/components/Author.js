@@ -6,7 +6,7 @@ const Author =()=>{
 
   return (
     <div className="author-div comm-box">
-      <div> 
+      <div className='avatar'> 
         <Avatar size={100} src="http://blogimages.jspang.com/blogtouxiang1.jpg"  />
       </div>
       <div className="author-introduction">

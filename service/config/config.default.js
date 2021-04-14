@@ -49,11 +49,9 @@ module.exports = appInfo => {
   }
   const arr = ['http://127.0.0.1:3000','http://127.0.0.1:3001']
   config.cors = {
-    origin: '*',
-    // origin: ctx => ctx.get('origin'), //允许所有请求源进行访问接口【开启凭证是仍然可以】
-    origin: (arr[0] || arr[1]), //只允许这个域进行访问接口
-    // origin: ctx => ctx.get('origin'),//允许所有请求源进行访问接口【开启凭证是仍然可以】
-    allowCredentials: true,
+    // origin: '*',
+    origin: ctx => ctx.get('origin'), //允许所有请求源进行访问接口【开启凭证是仍然可以】
+    // origin: 'http://127.0.0.1:3000', //只允许这个域进行访问接口
     credentials: true,   // 开启认证，允许cookie跨域
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
   };

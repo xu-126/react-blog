@@ -1,6 +1,11 @@
 import React from 'react'
 import Head from 'next/head'
-import {Row, Col , Icon , Affix, Breadcrumb  } from 'antd'
+import {Row, Col , Affix, Breadcrumb  } from 'antd'
+import {
+  CalendarOutlined,
+  FolderOutlined,
+  FireOutlined,
+} from '@ant-design/icons';
 import axios from 'axios'
 import moment from 'moment'
 import Header from '../components/Header'
@@ -116,9 +121,9 @@ const Detailed = (props) => {
                 </div>
 
                 <div className="list-icon center">
-                  <span><Icon type="calendar" />{moment(props.release_time).format('YYYY-MM-DD')}</span>
-                  <span><Icon type="folder" />{props.typeName}</span>
-                  <span><Icon type="fire" />{props.visit_count}人</span>
+                  <span><CalendarOutlined />{moment(props.release_time).format('YYYY-MM-DD')}</span>
+                  <span><FolderOutlined />{props.typeName}</span>
+                  <span><FireOutlined />{props.visit_count}人</span>
                 </div>
 
                 <div className="detailed-content" 

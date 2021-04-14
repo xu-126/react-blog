@@ -36,10 +36,11 @@ function Login(props){
       data: dataProps,
       withCredentials: true   // 前后端共享 session
     }).then(res => {
+      console.log('---------res----------',res);
       setIsLoading(false)
-      if (res.data.data = '登录成功'){
+      if (res.data.data === '登录成功'){
+        console.log('----res.data',res.data);
         localStorage.setItem('openId',res.data.openId)
-        console.log('props: ', props);
         props.history.push('/index') // 页面跳转
       } else{
           message.error('用户名密码错误')

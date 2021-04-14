@@ -29,16 +29,16 @@ class MainController extends Controller{
   async checkLogin(){
     let userName = this.ctx.request.body.userName
     let password = this.ctx.request.body.password
-    const sql = " SELECT userName FROM userInfo WHERE userName = '"+userName +
+    const sql = " SELECT userName FROM userinfo WHERE userName = '"+userName +
                 "' AND password = '"+password+"'"
 
     const res = await this.app.mysql.query(sql)
     if(res.length>0){
+        console.log('登录成功,进行session缓存');
         //登录成功,进行session缓存
         let openId=new Date().getTime() // 类似于登录凭证【秘钥】
         this.ctx.session.openId={ 'openId':openId }
         this.ctx.body={'data':'登录成功','openId':openId}
-
     }else{
         this.ctx.body={data:'登录失败'}
     } 
@@ -115,6 +115,56 @@ class MainController extends Controller{
     const result = await this.app.mysql.query(sql)
     this.ctx.body={data:result}
   }
+
+  /**
+     * 根据文章id获取文章信息
+     * @param {文章id} id
+     */
+   async getArticleById() {
+    const { id } = this.ctx.params
+    // ？？ 优化时需要判断前端是否传递了id，否则会影响业务流程
+
+    const sql = 'SELECT article_content.id as id, '+
+                'article_content.title as title, '+
+                'article_content.content as content, '+
+                'article_content.introduce as introduce, '+
+                // 'FROM_UNIXTIME(article.createAt,"%Y-%m-%d %H:%i:%s" ) as createAt,'+
+                'article_content.release_time as release_time, '+
+                'article_content.visit_count as visit_count, '+
+                'article_type.typeName as typeName, '+
+                'article_type.id as typeId '+
+                'FROM article_content LEFT JOIN article_type ON article_content.type_id = article_type.Id '+
+                'WHERE article_content.id= '+id
+    
+    const result = await this.app.mysql.query(sql);
+
+    this.ctx.body = {
+      data: result
+    }
+  }
+
+  /**
+     * 根据文章类型id获取文章信息
+     * @param {文章类型id} id 
+     */
+   async getArticleByTypeId() {
+    const { id } = this.ctx.params
+    const sql = 'SELECT article_content.id as id, '+
+                'article_content.title as title, '+
+                'article_content.content as content, '+
+                'article_content.introduce as introduce, '+
+                'article_content.release_time as release_time, '+
+                'article_content.visit_count as visit_count, '+
+                'article_type.typeName as typeName, '+
+                'article_type.id as typeId '+
+                'FROM article_content LEFT JOIN article_type ON article_content.type_id = article_type.id '+
+                'WHERE article_type.id= '+id
+    const result = await this.app.mysql.query(sql);
+    this.ctx.body = {
+      data: result
+    }
+  }
+
 
    /*********************************留言管理*************************************/
 

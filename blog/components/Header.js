@@ -1,39 +1,59 @@
 import React,{ useState, useEffect } from 'react'
 import '../styles/components/header.css'
 import { Row, Col, Menu } from 'antd'
-import { HomeOutlined, VideoCameraOutlined, SmileOutlined } from "@ant-design/icons";
+import {
+  HomeOutlined,
+  SmileOutlined,
+  HighlightOutlined,
+  ContainerOutlined,
+  LayoutOutlined
+} from '@ant-design/icons';
 import {useRouter} from 'next/router'
 import Link from 'next/link'
 import axios from 'axios'
 import servicePath from '../config/apiUrl'
 
 const Header = () => {
-
-  // const [navArray , setNavArray] = useState([])
-  //   useEffect(()=>{
-
-  //       const fetchData = async ()=>{
-  //          const result= await axios(servicePath.getTypeInfo).then(
-  //               (res)=>{
-  //                   setNavArray(res.data.data)
-  //                   return res.data.data
-  //               }
-  //             )
-  //          setNavArray(result)
-  //       }
-  //       fetchData()
-  //   },[])
+  const [navArr, setNavArr] = useState([])
   const router = useRouter();
+
 //跳转到列表页
   const handleClick = (e)=>{
     if(e.key === '0'){
-      console.log('index/..........');
       router.push('/index')
     }else{
-      console.log('list/..........');
+      console.log('list:',e.key);
       router.push('/list?id='+e.key)
     }
   }
+
+  useEffect(() => {
+    // 获取文章类别信息
+    const fetchData = async () => {
+      await axios(servicePath.getTypeInfo).then(res => {
+        const data = res.data.data
+        setNavArr(data)
+      })
+    }
+    fetchData()
+  }, [])
+
+  // 获取相应的类别图标
+  const getIcon = (text) => {
+    switch(text) {
+      case 'LayoutOutlined':
+        return <LayoutOutlined />
+      case 'ContainerOutlined':
+        return <ContainerOutlined />
+      case 'SmileOutlined':
+        return <SmileOutlined />
+      case 'HighlightOutlined':
+        return <HighlightOutlined />
+      default: 
+        return <HomeOutlined />
+    }
+  }
+
 
   return (
     <div className="header">
@@ -47,20 +67,22 @@ const Header = () => {
           <span className="header-txt">专注前端开发,每年100集免费视频。</span>
         </Col>
 
-        <Col className="memu-div" xs={0} sm={0} md={14} lg={8} xl={6}>
+        <Col className="memu-div" xs={0} sm={0} md={14} lg={10} xl={8}>
           <Menu mode="horizontal" onClick={handleClick}>
             <Menu.Item key="0">
               <HomeOutlined />
               首页
             </Menu.Item>
-            <Menu.Item key="1">
-              <VideoCameraOutlined />
-              视频
-            </Menu.Item>
-            <Menu.Item key="2">
-              <SmileOutlined />
-              生活
-            </Menu.Item>
+            {
+              navArr.map(item => {
+                return (
+                  <Menu.Item key={item.id}>
+                    {getIcon(item.iconType)}
+                    {item.typeName}
+                  </Menu.Item>
+                )
+              })
+            }
           </Menu>
         </Col>
       </Row>
