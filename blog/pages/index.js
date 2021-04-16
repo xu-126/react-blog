@@ -1,17 +1,19 @@
 import React, { useState } from 'react'
 import Head from 'next/head'
-import Header from '../components/Header'
 import { Row, Col, List, BackTop, Affix, Pagination } from 'antd';
 import {
   CalendarOutlined,
   FolderOutlined,
   FireOutlined,
 } from '@ant-design/icons'
+
 import '../styles/pages/index.css'
+import Header from '../components/Header'
 import Author from '../components/Author'
 import Advert from '../components/Advert'
 import Footer from '../components/Footer'
 import ViewRank from '../components/ViewRank'
+
 import Link from 'next/link'
 import axios from 'axios'
 import servicePath from '../config/apiUrl'
@@ -76,7 +78,7 @@ const Home = (list) =>  {
                 <List.Item>
                   <div className="list-title">
                     <Link href={{pathname: '/detailed', query:{id: item.id}}}>
-                      <a>{item.title}</a>
+                      <a style={{color: '#9c32bf'}}>{item.title}</a>
                     </Link>
                     {/* {item.title} */}
                   </div>

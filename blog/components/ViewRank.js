@@ -31,7 +31,7 @@ const ViewRank = () => {
           <div key={item.id}>
             <div className="view-title" >
               <Link href={{ pathname: '/detailed', query:{id: item.id} }}>
-                <a>{item.title}</a>
+                <a style={{color: '#9c32bf'}}>{item.title}</a>
               </Link>
             </div>
             <div className="view-count">{`(${item.visit_count})`}</div>

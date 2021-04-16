@@ -87,7 +87,7 @@ const MyList = (list) => {
               <List.Item>
                 <div className="list-title">
                   <Link href={{ pathname: '/detail', query: {id: item.id} }}>
-                    <a>{item.title}</a>
+                    <a style={{color: '#9c32bf'}}>{item.title}</a>
                   </Link>
                 </div>
                 <div className="list-icon">

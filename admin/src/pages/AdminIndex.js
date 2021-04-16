@@ -117,9 +117,9 @@ const AdminIndex = (props) => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
-        <div className="logo" />
-        <Menu defaultSelectedKeys={['workSpace']} mode="inline" onClick={selectHandleMenu}>
+      <Sider theme='light' collapsible collapsed={collapsed} onCollapse={onCollapse}>
+        <div className="logo">{`${collapsed ? 'BLOG' : 'BLOG后台管理系统'}`}</div>
+        <Menu defaultSelectedKeys={['workSpace']}  mode="inline" onClick={selectHandleMenu}>
           <Menu.Item key="workSpace">
             <DesktopOutlined />
             <span>工作台</span>
@@ -155,13 +155,12 @@ const AdminIndex = (props) => {
                 小嗨<DownOutlined />
               </span>
             </Dropdown>
-            <div className="header-avatar">
+            {/* <div className="header-avatar">
               { userInfo.avatar && (
                 <MyAvatar imgUrl={userInfo.avatar} updateUserMessage={updateUserMessage} userInfo={userInfo}/>)
               }
-            </div>
-            
-            {/* <Avatar src="https://avatars.githubusercontent.com/u/51733211?s=400&u=591b6a327fa0ac83a2857fdd534ce16cb490b267&v=4" size={45} /> */}
+            </div> */}
+            <Avatar size={50} src='https://terminus-paas.oss-cn-hangzhou.aliyuncs.com/pmp/attachments/file-e3311554-de59-4b07-a22c-5c29c1d9c006.png' />
           </div>
         </Header>
         <Content style={{ margin: '0 16px' }}>

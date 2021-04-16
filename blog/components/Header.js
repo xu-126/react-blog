@@ -20,7 +20,7 @@ const Header = () => {
 //跳转到列表页
   const handleClick = (e)=>{
     if(e.key === '0'){
-      router.push('/index')
+      router.push('/')
     }else{
       console.log('list:',e.key);
       router.push('/list?id='+e.key)
@@ -60,11 +60,11 @@ const Header = () => {
       <Row type="flex" justify="center">
         <Col  xs={24} sm={24} md={10} lg={15} xl={12}>
           <span className="header-logo">
-            <Link href={{pathname:'/index'}}>
-              <a> 技术胖</a>
+            <Link href={{pathname:'/'}}>
+              <a>天很蓝</a>
             </Link>
           </span>
-          <span className="header-txt">专注前端开发,每年100集免费视频。</span>
+          <span className="header-txt">学习前端开发,分享记录点滴收获。</span>
         </Col>
 
         <Col className="memu-div" xs={0} sm={0} md={14} lg={10} xl={8}>
