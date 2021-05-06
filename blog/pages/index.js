@@ -21,6 +21,7 @@ import servicePath from '../config/apiUrl'
 import marked from 'marked'
 import hljs from "highlight.js";
 import 'highlight.js/styles/monokai-sublime.css';
+import moment from 'moment'
 
 const Home = (list) =>  {
   
@@ -71,7 +72,7 @@ const Home = (list) =>  {
         <Col className="comm-left" xs={24} sm={24} md={16} lg={18} xl={14}  >
           <div>    
             <List
-              header={<div>最新日志</div>}
+              header={<div>最新文章列表</div>}
               itemLayout="vertical"
               dataSource={mylist}
               renderItem={item => (
@@ -83,7 +84,7 @@ const Home = (list) =>  {
                     {/* {item.title} */}
                   </div>
                   <div className="list-icon">
-                    <span><CalendarOutlined />{item.release_time}</span>
+                    <span><CalendarOutlined />{moment(item.release_time).format('YYYY-MM-DD')}</span>
                     <span><FolderOutlined />{item.typeName}</span>
                     <span><FireOutlined />{item.visit_count}人</span>
                   </div>
@@ -106,8 +107,8 @@ const Home = (list) =>  {
 
         <Col className="comm-right" xs={0} sm={0} md={7} lg={6} xl={5}>
           <Author />
-          <Advert />
           <ViewRank />
+          <Advert />
         </Col>
         <Footer />
       </Row>

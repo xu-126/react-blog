@@ -20,7 +20,7 @@ class HomeController extends Controller {
               "FROM_UNIXTIME(article_content.release_time,'%Y-%m-%d %H:%i:%s' ) as release_time,"+
               'article_content.release_time as release_time,'+
               'article_content.visit_count as visit_count ,'+
-              '.article_type.typeName as typeName '+
+              'article_type.typeName as typeName '+
               'FROM article_content LEFT JOIN article_type ON article_content.type_id = article_type.id'+
               ' ORDER BY article_content.id DESC '+
               'LIMIT '+startRows+', '+endRows              
@@ -71,11 +71,10 @@ class HomeController extends Controller {
    'article_content.title as title,'+
    'article_content.introduce as introduce,'+
    'article_content.content as content,'+
-  //  "FROM_UNIXTIME(article_content.release_time,'%Y-%m-%d %H:%i:%s' ) as release_time,"+
    'article_content.release_time as release_time,'+
    'article_content.visit_count as visit_count ,'+
-   '.article_type.typeName as typeName,'+
-   '.article_type.id as typeId ' +
+   'article_type.typeName as typeName,'+
+   'article_type.id as typeId ' +
    'FROM article_content LEFT JOIN article_type ON article_content.type_id ' +
    'WHERE article_content.id='+id
 
@@ -104,7 +103,7 @@ class HomeController extends Controller {
   'article_content.release_time as release_time,'+
   'article_content.visit_count as visit_count ,'+
   'article_type.typeName as typeName '+
-  'FROM article_content LEFT JOIN article_type ON article_content.type_id = article_type.Id '+
+  'FROM article_content LEFT JOIN article_type ON article_content.type_id = article_type.id '+
   'WHERE article_type.id='+id+
   ' ORDER BY article_content.id DESC '+
   'LIMIT '+startRows+', '+endRows

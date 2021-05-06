@@ -19,7 +19,7 @@ const AddArticle = (props) => {
   const [showDate,setShowDate] = useState('2021-04-01')   //发布日期
   const [updateDate,setUpdateDate] = useState() //修改日志的日期
   const [typeInfo ,setTypeInfo] = useState([]) // 文章类别信息
-  const [selectedType,setSelectType] = useState('请选择类型') //选择的文章类别
+  const [selectedType,setSelectType] = useState('选择类型') //选择的文章类别
 
 
   useEffect(() => {
@@ -179,10 +179,7 @@ const AddArticle = (props) => {
               />
             </Col>
             <Col span={4}>
-              &nbsp;
-              <Select value={selectedType} defaultValue={selectedType} allowClear style={{ width: '7rem' }} size="middle" onChange={selectTypeHandler}>
-                {/* <Option value="Sign Up">视频教程</Option>
-                <Option value="js">js知识</Option> */}
+              <Select value={selectedType} defaultValue={selectedType} allowClear style={{ width: '6.5rem' }} size="middle" onChange={selectTypeHandler}>
                 {
                   typeInfo.map((item,index) => {
                     return (

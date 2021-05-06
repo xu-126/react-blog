@@ -43,7 +43,7 @@ const MyComment = (props) => {
       <Comment
         avatar={
           <Avatar
-            src="http://blogimages.jspang.com/blogtouxiang1.jpg"
+            src="https://pic3.zhimg.com/80/v2-1bda1fa722e5e510bc2c8dfb1793d8a2_720w.jpg"
             alt="Han Solo"
           />
         }

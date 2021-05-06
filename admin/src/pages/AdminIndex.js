@@ -152,7 +152,7 @@ const AdminIndex = (props) => {
           <div className="header-right">
             <Dropdown overlay={menu} placement="bottomLeft">
               <span className="header-nickname">
-                小嗨<DownOutlined />
+                天很蓝<DownOutlined />
               </span>
             </Dropdown>
             {/* <div className="header-avatar">

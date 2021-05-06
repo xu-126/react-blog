@@ -28,48 +28,11 @@ import Tocify from '../components/tocify.tsx'; // 菜单栏
 import  servicePath  from '../config/apiUrl'
 
 const Detailed = (props) => {
-  let markdown=
-  '# p01:来个Hello World 初始Vue3.0\n' +
-  '> aaaaaaaaa\n' +
-  '>> bbbbbbbbb\n' +
-  '>>> cccccccccc\n'+
-  '***\n\n\n' +
-  '# p001:来个Hello World 初始Vue3.0\n' +
-  '> aaaaaaaaa\n' +
-  '>> bbbbbbbbb\n' +
-  '>>> cccccccccc\n'+
-  '***\n\n\n' +
-  '# p02:来个Hello World 初始Vue3.0\n' +
-  '> aaaaaaaaa\n' +
-  '>> bbbbbbbbb\n' +
-  '>>> cccccccccc\n'+
-  '***\n\n\n' +
-  '# p03:Vue3.0基础知识讲解\n' +
-  '> aaaaaaaaa\n' +
-  '>> bbbbbbbbb\n' +
-  '>>> cccccccccc\n\n'+
-  '# p04:Vue3.0基础知识讲解\n' +
-  '> aaaaaaaaa\n' +
-  '>> bbbbbbbbb\n' +
-  '>>> cccccccccc\n\n'+
-  '# p05:Vue3.0基础知识讲解\n' +
-  '> aaaaaaaaa\n' +
-  '>> bbbbbbbbb\n' +
-  '>>> cccccccccc\n\n'+
-  '# p06:Vue3.0基础知识讲解\n' +
-  '> aaaaaaaaa\n' +
-  '>> bbbbbbbbb\n' +
-  '>>> cccccccccc\n\n'+
-  '# p07:Vue3.0基础知识讲解\n' +
-  '> aaaaaaaaa\n' +
-  '>> bbbbbbbbb\n' +
-  '>>> cccccccccc\n\n'+
-  '``` var a=11; ```'
 
   const tocify = new Tocify();
   const renderer = new marked.Renderer();
 
-  // ### jspang
+  // ### 文章段落标题展示
   renderer.heading = function(text, level, raw) {
     const anchor = tocify.add(text, level);
     return `<a id="${anchor}" href="#${anchor}" class="anchor-fix">
@@ -77,7 +40,6 @@ const Detailed = (props) => {
             </a>\n`;
   };
   
-
   marked.setOptions({
     renderer: renderer,  // 自定义菜单渲染
     gfm: true,         // 是否保持github样式
@@ -91,11 +53,7 @@ const Detailed = (props) => {
       return hljs.highlightAuto(code).value;   // 自动检测
     }
   }); 
-  
-  // React.useEffect(() => {
-  //   console.log('props: ',props)
-  // }, [])
-  
+
   let html = marked(props.content)
   
   return (
@@ -138,7 +96,6 @@ const Detailed = (props) => {
 
         <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>
           <Author />
-          <Advert />
           <Affix offsetTop={5}>
             <div className="detailed-nav comm-box">
               <div className="nav-title">文章目录</div>

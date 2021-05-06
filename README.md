@@ -100,3 +100,5 @@ npm run dev || yarn dev
 [前台展示页面地址](http://localhost:3000)
 
 [后台管理系统地址](http://localhost:3001)
+
+[中台接口访问地址](http://127.0.0.1:7001/default/)(http://127.0.0.1:7001/admin/)
